@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Happy 3rd Anniversary, Roshu 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ── DARK THEME (default) ── */
+:root {
+  --blush:   #9b4d6e;
+  --rose:    #e8748a;
+  --deep:    #f0a0b8;
+  --petal:   #1a0d12;
+  --cream:   #1f1117;
+  --mauve:   #c48a9e;
+  --text:    #f0d0da;
+  --soft:    #3d1a28;
+  --card-bg: #251318;
+  --card-border: #5a2a3a;
+  --section-bg: #1f1117;
+  --hero-bg1: #120a0e;
+  --hero-bg2: #1a0d12;
+  --hero-bg3: #200e16;
+  --counter-bg: #2a1520;
+  --promise-bg: #2a1520;
+  --intro-bg1: #1a0d12;
+  --intro-bg2: #2a1020;
+  --bar-bg: #3d1a28;
+  --letter-bg: #251318;
+  --finale-bg1: #1a0d12;
+  --finale-bg2: #2a1020;
+  --petcat-bg1: #1f1117;
+  --petcat-bg2: #1a0d12;
+  --memories-bg: #1a0d12;
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --blush:   #f9c8d4;
+  --rose:    #e8748a;
+  --deep:    #c44d6b;
+  --petal:   #fce8ef;
+  --cream:   #fff8f9;
+  --mauve:   #d4a0b0;
+  --text:    #5a2d3e;
+  --soft:    #f0c0cc;
+  --card-bg: #ffffff;
+  --card-border: #f9c8d4;
+  --section-bg: #fff8f9;
+  --hero-bg1: #fff0f5;
+  --hero-bg2: #fce4ec;
+  --hero-bg3: #ffd6e7;
+  --counter-bg: #ffffff;
+  --promise-bg: #ffffff;
+  --intro-bg1: #fce4ec;
+  --intro-bg2: #f8bbd9;
+  --bar-bg: #fce8ef;
+  --letter-bg: #ffffff;
+  --finale-bg1: #fce4ec;
+  --finale-bg2: #f8bbd9;
+  --petcat-bg1: #fff0f5;
+  --petcat-bg2: #fce4ec;
+  --memories-bg: #fff8f9;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--petal);
+  font-family: 'Quicksand', sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* ── CUSTOM CURSOR (hidden on touch devices) ── */
+#cursor {
+  width: 20px; height: 20px;
+  background: var(--rose);
+  border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: screen;
+}
+#cursor.big { width: 50px; height: 50px; background: var(--blush); }
+@media (hover: none) { #cursor { display: none; } body { cursor: auto; } }
+
+/* ── THEME TOGGLE BUTTON ── */
+#theme-toggle {
+  position: fixed;
+  top: 1rem; right: 1rem;
+  z-index: 5000;
+  background: var(--rose);
+  color: white;
+  border: none;
+  border-radius: 100px;
+  padding: .55rem 1.1rem;
+  font-family: 'Quicksand', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(200,70,100,.4);
+  transition: transform .2s, box-shadow .2s, background .3s;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+#theme-toggle:hover { transform: scale(1.06); box-shadow: 0 6px 28px rgba(200,70,100,.55); }
+
+/* ── MUSIC BUTTON ── */
+#music-btn {
+  position: fixed;
+  top: 1rem; left: 1rem;
+  z-index: 5000;
+  background: var(--soft);
+  color: var(--deep);
+  border: 2px solid var(--card-border);
+  border-radius: 100px;
+  padding: .55rem 1rem;
+  font-family: 'Quicksand', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(200,70,100,.2);
+  transition: transform .2s, background .3s;
+  white-space: nowrap;
+}
+#music-btn:hover { transform: scale(1.06); }
+
+/* ── FLOATING THINGS ── */
+.floater {
+  position: fixed; pointer-events: none; z-index: 0;
+  animation: floatUp linear infinite;
+  opacity: 0;
+  font-size: 1.4rem;
+  user-select: none;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: .7; }
+  90%  { opacity: .4; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+/* ── INTRO / LOADING SCREEN ── */
+#intro {
+  position: fixed; inset: 0; z-index: 1000;
+  background: linear-gradient(135deg, var(--intro-bg1), var(--intro-bg2), var(--intro-bg1));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity .8s ease, transform .8s ease;
+  padding: 2rem;
+}
+#intro.gone { opacity: 0; transform: scale(1.05); pointer-events: none; }
+.intro-cat { font-size: 5rem; animation: bounce 1s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+.intro-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  color: var(--deep); margin-top: 1rem; text-align: center;
+}
+.intro-sub {
+  font-size: .9rem; color: var(--rose); margin-top: .5rem;
+  letter-spacing: .1em; text-transform: uppercase; text-align: center;
+}
+.tap-btn {
+  margin-top: 2.5rem;
+  padding: 1rem 2.5rem;
+  background: var(--rose); color: white;
+  border: none; border-radius: 100px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer; letter-spacing: .06em;
+  box-shadow: 0 8px 32px rgba(200,70,100,.45);
+  transition: transform .2s, box-shadow .2s;
+  animation: pulse-btn 2s ease-in-out infinite;
+}
+.tap-btn:hover, .tap-btn:active { transform: scale(1.07); }
+@keyframes pulse-btn { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+
+/* ── GLOBAL SECTIONS ── */
+section { position: relative; z-index: 1; }
+
+/* ══════════════════════ HERO ══════════════════════ */
+#hero {
+  min-height: 100dvh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 2rem 1.5rem;
+  background: linear-gradient(160deg, var(--hero-bg1) 0%, var(--hero-bg2) 40%, var(--hero-bg3) 100%);
+  overflow: hidden;
+}
+.hero-bg-cats {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  pointer-events: none; opacity: .07;
+}
+.hero-bg-cats span {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+  animation: wiggle 3s ease-in-out infinite;
+}
+.hero-bg-cats span:nth-child(odd)  { animation-delay: .5s; }
+.hero-bg-cats span:nth-child(3n)   { animation-delay: 1s; }
+@keyframes wiggle { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+
+.hero-date {
+  font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--rose); font-weight: 600;
+  background: var(--counter-bg); padding: .4rem 1.2rem; border-radius: 100px;
+  box-shadow: 0 4px 16px rgba(200,70,100,.2);
+  animation: fadeDown .8s ease forwards;
+  max-width: 100%; text-align: center;
+}
+@keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:none} }
+
+.hero-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(3rem, 12vw, 7rem);
+  color: var(--deep);
+  line-height: 1.1;
+  margin: 1rem 0 .5rem;
+  animation: fadeDown .8s .2s ease both;
+  text-shadow: 0 4px 20px rgba(196, 77, 107, .3);
+}
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 3.5vw, 1.6rem);
+  color: var(--rose); font-style: italic;
+  animation: fadeDown .8s .4s ease both;
+  padding: 0 1rem;
+}
+
+/* Counter */
+.counter-wrap {
+  display: flex; gap: .8rem; margin: 2rem 0;
+  animation: fadeDown .8s .6s ease both;
+  flex-wrap: wrap; justify-content: center;
+}
+.counter-box {
+  background: var(--counter-bg); border-radius: 18px;
+  padding: 1rem 1.2rem; text-align: center;
+  box-shadow: 0 8px 32px rgba(200,70,100,.15);
+  min-width: 80px;
+  border: 2px solid var(--card-border);
+  transition: background 0.4s, border-color 0.4s;
+}
+.counter-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 5vw, 2.2rem); color: var(--deep); font-weight: 700; line-height: 1;
+}
+.counter-label { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--mauve); margin-top: .25rem; }
+
+/* Scroll hint */
+.scroll-down {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  font-size: .75rem; color: var(--mauve); letter-spacing: .1em;
+  animation: bob 2s ease-in-out infinite;
+}
+@keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+.scroll-down::after { content:'↓'; font-size: 1.2rem; color: var(--rose); }
+
+/* ══════════════════════ MEMORY WALL ══════════════════════ */
+#memories {
+  background: var(--memories-bg);
+  padding: 5rem 1.5rem;
+  transition: background 0.4s;
+}
+.memories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem; max-width: 900px; margin: 2.5rem auto 0;
+}
+.memory-card {
+  background: var(--card-bg); border-radius: 24px;
+  padding: 1.8rem 1.5rem;
+  border: 2px solid var(--card-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
+  text-align: center;
+  transition: transform .3s, box-shadow .3s, background 0.4s, border-color 0.4s;
+  cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.memory-card:hover, .memory-card:active { transform: translateY(-6px) rotate(.8deg); box-shadow: 0 20px 60px rgba(200,70,100,.25); }
+.memory-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.memory-date {
+  font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--rose); font-weight: 600; margin-bottom: .5rem;
+}
+.memory-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; color: var(--deep); margin-bottom: .5rem;
+}
+.memory-text { font-size: .85rem; color: var(--mauve); line-height: 1.8; }
+
+/* ══════════════════════ PET THE CAT ══════════════════════ */
+#petcat {
+  background: linear-gradient(180deg, var(--petcat-bg1), var(--petcat-bg2));
+  padding: 5rem 1.5rem; text-align: center;
+  transition: background 0.4s;
+}
+.cat-container {
+  max-width: 340px; margin: 2.5rem auto 0;
+  background: var(--card-bg); border-radius: 32px;
+  border: 3px solid var(--card-border);
+  padding: 3rem 2rem;
+  box-shadow: 0 16px 60px rgba(200,70,100,.2);
+  cursor: pointer;
+  transition: background 0.4s, border-color 0.4s;
+}
+.big-cat {
+  font-size: 6rem;
+  display: block; margin: 0 auto 1rem;
+  transition: transform .2s;
+  filter: drop-shadow(0 8px 16px rgba(200,70,100,.3));
+  animation: cat-breathe 3s ease-in-out infinite;
+}
+@keyframes cat-breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+.big-cat.happy    { animation: cat-happy .4s ease; }
+.big-cat.very-happy { animation: cat-very-happy .5s ease; }
+@keyframes cat-happy { 0%{transform:scale(1)} 50%{transform:scale(1.2) rotate(-8deg)} 100%{transform:scale(1.05)} }
+@keyframes cat-very-happy { 0%{transform:scale(1)} 25%{transform:scale(1.3) rotate(10deg)} 50%{transform:scale(1.15) rotate(-8deg)} 75%{transform:scale(1.25) rotate(5deg)} 100%{transform:scale(1.05)} }
+
+#pet-bar-wrap {
+  background: var(--bar-bg); border-radius: 100px;
+  height: 14px; overflow: hidden; margin: 1.2rem 0 .5rem;
+  transition: background 0.4s;
+}
+#pet-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--blush), var(--rose));
+  border-radius: 100px;
+  transition: width .3s ease;
+}
+#pet-status {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem; color: var(--deep); margin: .5rem 0;
+}
+#pet-count { font-size: .8rem; color: var(--mauve); }
+
+/* ══════════════════════ LOVE LETTER ══════════════════════ */
+#letter {
+  background: var(--section-bg);
+  padding: 5rem 1.5rem; text-align: center;
+  transition: background 0.4s;
+}
+.letter-wrap {
+  max-width: 640px; margin: 2rem auto 0;
+  background: var(--letter-bg);
+  border-radius: 24px;
+  border: 2px solid var(--card-border);
+  box-shadow: 0 16px 60px rgba(0,0,0,.3);
+  padding: 3rem 2rem;
+  position: relative;
+  transition: background 0.4s, border-color 0.4s;
+}
+.letter-wrap::before {
+  content: '💌';
+  position: absolute; top: -1.8rem; left: 50%; transform: translateX(-50%);
+  font-size: 3rem; filter: drop-shadow(0 4px 8px rgba(200,70,100,.4));
+}
+.letter-body {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.95rem, 2.5vw, 1.05rem); line-height: 2;
+  color: var(--text); text-align: left;
+}
+.letter-body em { color: var(--deep); font-weight: 700; font-style: italic; }
+.letter-sign {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem; color: var(--rose);
+  margin-top: 1.5rem; text-align: right;
+}
+.envelope-wrap { text-align: center; margin-top: 2rem; }
+.env-btn {
+  padding: 1rem 2.5rem; background: var(--rose); color: white;
+  border: none; border-radius: 100px;
+  font-family: 'Quicksand', sans-serif; font-size: 1rem; font-weight: 700;
+  cursor: pointer; box-shadow: 0 8px 24px rgba(200,70,100,.35);
+  transition: transform .2s, box-shadow .2s;
+}
+.env-btn:hover, .env-btn:active { transform: scale(1.05); }
+#letter-reveal { display: none; margin-top: 2rem; }
+#letter-reveal.open { display: block; animation: fadeDown .6s ease; }
+
+/* ══════════════════════ PROMISE GENERATOR ══════════════════════ */
+#promises {
+  background: linear-gradient(180deg, var(--hero-bg2), var(--hero-bg3));
+  padding: 5rem 1.5rem; text-align: center;
+  transition: background 0.4s;
+}
+.promise-box {
+  max-width: 500px; margin: 2rem auto 0;
+  background: var(--promise-bg); border-radius: 28px;
+  border: 2px solid var(--card-border);
+  padding: 2.5rem 2rem;
+  box-shadow: 0 12px 48px rgba(0,0,0,.3);
+  min-height: 120px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.4s, border-color 0.4s;
+}
+#promise-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.3rem, 4vw, 1.6rem); color: var(--deep); line-height: 1.5;
+  transition: opacity .3s;
+}
+.promise-btn {
+  margin-top: 1.5rem;
+  padding: .9rem 2.2rem; background: var(--rose); color: white;
+  border: none; border-radius: 100px;
+  font-family: 'Quicksand', sans-serif; font-size: .95rem; font-weight: 700;
+  cursor: pointer; box-shadow: 0 8px 24px rgba(200,70,100,.35);
+  transition: transform .2s;
+}
+.promise-btn:hover, .promise-btn:active { transform: scale(1.05); }
+
+/* ══════════════════════ FINALE ══════════════════════ */
+#finale {
+  background: linear-gradient(135deg, var(--finale-bg1) 0%, var(--finale-bg2) 50%, var(--finale-bg1) 100%);
+  padding: 6rem 2rem; text-align: center;
+  position: relative; overflow: hidden;
+  transition: background 0.4s;
+}
+.finale-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.5rem, 10vw, 6rem);
+  color: var(--deep); line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(196,77,107,.3);
+}
+.finale-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; color: var(--rose); font-style: italic;
+  margin-top: 1rem;
+}
+.finale-hearts {
+  font-size: 2rem; margin-top: 2rem;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+@keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.2)} 28%{transform:scale(1)} 42%{transform:scale(1.15)} }
+
+/* ── Shared section header ── */
+.sec-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  color: var(--deep); margin-bottom: .5rem;
+  text-align: center;
+}
+.sec-sub { color: var(--mauve); font-size: .95rem; margin-bottom: 2.5rem; text-align: center; }
+
+/* ── Heart burst ── */
+.heart-burst {
+  position: absolute; pointer-events: none;
+  font-size: 1.8rem; z-index: 10;
+  animation: burst .7s ease forwards;
+}
+@keyframes burst {
+  0%   { transform: scale(0) translateY(0); opacity: 1; }
+  50%  { transform: scale(1.4) translateY(-30px); }
+  100% { transform: scale(1) translateY(-60px); opacity: 0; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .memories-grid { grid-template-columns: 1fr; }
+  .counter-wrap { gap: .6rem; }
+  .counter-box { padding: .8rem 1rem; min-width: 70px; }
+  .letter-wrap { padding: 2rem 1.2rem; }
+  .cat-container { padding: 2rem 1.5rem; }
+  #theme-toggle { font-size: .75rem; padding: .5rem .9rem; }
+  #music-btn { font-size: .75rem; padding: .5rem .9rem; }
+}
+
+/* Reveal on scroll */
+.rosh-rv { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+.rosh-rv.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<!-- 
+  ╔══════════════════════════════════════════════════════╗
+  ║  HOW TO ADD BACKGROUND MUSIC                         ║
+  ║                                                      ║
+  ║  1. Find your song as an MP3 file                    ║
+  ║     (e.g. your-song.mp3)                             ║
+  ║                                                      ║
+  ║  2. Place the MP3 in the same folder as this HTML    ║
+  ║                                                      ║
+  ║  3. Uncomment the <audio> tag below and replace      ║
+  ║     "your-song.mp3" with your actual filename        ║
+  ║                                                      ║
+  ║  NOTE: Browsers block autoplay until the user        ║
+  ║  interacts (clicks) with the page first.             ║
+  ║  The "Open it 🌸" button on the intro screen         ║
+  ║  already triggers playback automatically for you!    ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<!-- <audio id="bg-music" loop>
+  <source src="your-song.mp3" type="audio/mpeg">
+</audio> -->
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+
+<!-- FLOATING PETALS & HEARTS -->
+<div id="floaters"></div>
+
+<!-- THEME TOGGLE -->
+<button id="theme-toggle" onclick="toggleTheme()">☀️ Light Mode</button>
+
+<!-- MUSIC TOGGLE -->
+<button id="music-btn" onclick="toggleMusic()">🎵 Music</button>
+
+<!-- ══ INTRO SCREEN ══ -->
+<div id="intro">
+  <div class="intro-cat">🌸</div>
+  <div class="intro-text">Psst… someone made<br>something for you, Roshu 💕</div>
+  <div class="intro-sub">A little surprise is waiting…</div>
+  <button class="tap-btn" id="intro-btn">Open it 🌸</button>
+</div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg-cats" aria-hidden="true">
+    <span>🐱</span><span>🌸</span><span>🐱</span><span>💕</span><span>🐱</span><span>🌸</span>
+    <span>💗</span><span>🐱</span><span>🌷</span><span>🐱</span><span>🌸</span><span>💕</span>
+    <span>🐱</span><span>💗</span><span>🐱</span><span>🌸</span><span>🐱</span><span>💕</span>
+    <span>🌸</span><span>🐱</span><span>💗</span><span>🐱</span><span>🌷</span><span>🐱</span>
+  </div>
+
+  <div class="hero-date">25 February 2023 → 25 February 2026 🎀</div>
+
+  <h1 class="hero-title">
+    Happy 3rd<br>Anniversary,<br>
+    <em style="color:var(--rose);">Roshni</em> 🌸
+  </h1>
+  <p class="hero-sub">Three years of us. And still not enough. 💓</p>
+
+  <div class="counter-wrap">
+    <div class="counter-box"><div class="counter-num" id="cnt-years">3</div><div class="counter-label">Years</div></div>
+    <div class="counter-box"><div class="counter-num" id="cnt-months">36</div><div class="counter-label">Months</div></div>
+    <div class="counter-box"><div class="counter-num" id="cnt-days">—</div><div class="counter-label">Days</div></div>
+    <div class="counter-box"><div class="counter-num" id="cnt-hours">—</div><div class="counter-label">Hours</div></div>
+  </div>
+
+  <div class="scroll-down">keep scrolling</div>
+</section>
+
+<!-- ══ MEMORIES ══ -->
+<section id="memories" class="rosh-rv">
+  <div style="text-align:center">
+    <div class="sec-title">Our little story 📖</div>
+    <div class="sec-sub">Some chapters I'll never forget…</div>
+  </div>
+
+  <div class="memories-grid">
+    <div class="memory-card rosh-rv">
+      <span class="memory-emoji">💬</span>
+      <div class="memory-date">25 February 2023</div>
+      <div class="memory-title">"Will you be my gf?"</div>
+      <div class="memory-text">The most nervous three words I ever typed. And you said yes. Everything changed that day. 🥺</div>
+    </div>
+    <div class="memory-card rosh-rv">
+      <span class="memory-emoji">🌸</span>
+      <div class="memory-date">1 April 2025</div>
+      <div class="memory-title">The First Meeting</div>
+      <div class="memory-text">I still think about how that day felt. After waiting so long — finally. You were even more amazing in person. 💓</div>
+    </div>
+    <div class="memory-card rosh-rv">
+      <span class="memory-emoji">📖</span>
+      <div class="memory-date">Our book</div>
+      <div class="memory-title">A Thousand Days</div>
+      <div class="memory-text">You wrote our love story. I designed it. That's us — creating beautiful things together, always. 🎨</div>
+    </div>
+    <div class="memory-card rosh-rv">
+      <span class="memory-emoji">🌙</span>
+      <div class="memory-date">Every night</div>
+      <div class="memory-title">Late night calls</div>
+      <div class="memory-text">When the whole world slept and it was just us, talking about everything and nothing. Those are my favourite hours. 🌙</div>
+    </div>
+    <div class="memory-card rosh-rv">
+      <span class="memory-emoji">🐱</span>
+      <div class="memory-date">Always</div>
+      <div class="memory-title">Our little worlds</div>
+      <div class="memory-text">You with your pink things and kittens. Me with my coding and gadgets. Together we make perfect chaos. 💕</div>
+    </div>
+    <div class="memory-card rosh-rv">
+      <span class="memory-emoji">🔥</span>
+      <div class="memory-date">Right now</div>
+      <div class="memory-title">Year three ✨</div>
+      <div class="memory-text">We're still here. Still us. That means everything to me. Here's to many more. 🥂</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PET THE CAT ══ -->
+<section id="petcat" class="rosh-rv">
+  <div class="sec-title">Pet the anniversary cat! 🐾</div>
+  <div class="sec-sub">Keep clicking to make kitty very very happy (just like you make me happy 💕)</div>
+
+  <div class="cat-container" id="pet-container">
+    <span class="big-cat" id="big-cat">🐱</span>
+    <div id="pet-bar-wrap"><div id="pet-bar"></div></div>
+    <div id="pet-status">Waiting for pets… 🥺</div>
+    <div id="pet-count">0 pets given</div>
+  </div>
+</section>
+
+<!-- ══ LOVE LETTER ══ -->
+<section id="letter" class="rosh-rv">
+  <div class="sec-title">A letter for you 💌</div>
+  <div class="sec-sub">I wrote this from my heart, not ChatGPT 😅</div>
+
+  <div class="envelope-wrap">
+    <button class="env-btn" id="open-letter">Open your letter 💌</button>
+  </div>
+  <div id="letter-reveal">
+    <div class="letter-wrap">
+      <div class="letter-body">
+        <p>Dear <em>Roshu</em>,</p>
+        <br>
+        <p>Three years. It still feels unreal sometimes — that a "Will you be my gf?" on a random February night turned into <em>this</em>. Into us.</p>
+        <br>
+        <p>You've seen me at my most annoying, my most sleep-deprived, my most "I'm going to fix this bug at 3am" self — and you stayed. That means more than any words I can type. And trust me, I type a lot.</p>
+        <br>
+        <p>You wrote <em>A Thousand Days</em> about us. I designed it. But honestly, you're the one who wrote the actual story — with your patience, your warmth, and that laugh that makes everything okay.</p>
+        <br>
+        <p>I don't know what the next years look like. But I know I want you in all of them. Every single chaotic, lovely, pink-colored one.</p>
+        <br>
+        <p>Happy anniversary, <em>my favourite person</em>. 🌸</p>
+      </div>
+      <div class="letter-sign">Forever yours, Devansh 💕</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROMISE GENERATOR ══ -->
+<section id="promises" class="rosh-rv">
+  <div class="sec-title">My promises to you 🤞</div>
+  <div class="sec-sub">Tap the button — get a new promise every time!</div>
+  <div class="promise-box">
+    <div id="promise-text">Tap below to see a promise 🌸</div>
+  </div>
+  <button class="promise-btn" id="promise-btn">New promise 💗</button>
+</section>
+
+<!-- ══ FINALE ══ -->
+<section id="finale" class="rosh-rv">
+  <div class="finale-title">
+    You + Me<br>= Everything 💕
+  </div>
+  <div class="finale-sub">3 years down. Forever to go.</div>
+  <div class="finale-hearts">💗 💓 💗 💓 💗</div>
+  <div style="margin-top:2rem; font-size:.9rem; color:var(--rose);">Made with every bit of love by Devansh 🐱</div>
+</section>
+
+<script>
+/* ─── CURSOR ─── */
+const cursor = document.getElementById('cursor');
+let cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; cursor.style.left = cx+'px'; cursor.style.top = cy+'px'; });
+document.querySelectorAll('button,a,[role="button"]').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+
+/* ─── THEME TOGGLE ─── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.setAttribute('data-theme', 'light');
+    btn.textContent = '🌙 Dark Mode';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.textContent = '☀️ Light Mode';
+  }
+}
+
+/* ─── MUSIC TOGGLE ─── */
+let musicPlaying = false;
+const bgMusic = document.getElementById('bg-music');
+
+function toggleMusic() {
+  if (!bgMusic) {
+    alert("Music not set up yet! See the comment in the HTML file for how to add your song 🎵");
+    return;
+  }
+  if (musicPlaying) {
+    bgMusic.pause();
+    document.getElementById('music-btn').textContent = '🎵 Music';
+    musicPlaying = false;
+  } else {
+    bgMusic.play();
+    document.getElementById('music-btn').textContent = '⏸ Pause';
+    musicPlaying = true;
+  }
+}
+
+/* ─── INTRO ─── */
+document.getElementById('intro-btn').addEventListener('click', () => {
+  document.getElementById('intro').classList.add('gone');
+  setTimeout(() => document.getElementById('intro').remove(), 900);
+  launchFloaters();
+  // Auto-play music when user clicks the intro button
+  if (bgMusic) {
+    bgMusic.volume = 0.5;
+    bgMusic.play().then(() => {
+      musicPlaying = true;
+      document.getElementById('music-btn').textContent = '⏸ Pause';
+    }).catch(() => {});
+  }
+});
+
+/* ─── FLOATING ELEMENTS ─── */
+function launchFloaters() {
+  const emojis = ['🌸','💕','🌷','💗','🐱','✨','🎀','🌺','💓','🫶'];
+  const wrap = document.getElementById('floaters');
+  setInterval(() => {
+    const el = document.createElement('div');
+    el.className = 'floater';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.bottom = '-3rem';
+    el.style.animationDuration = (6 + Math.random() * 8) + 's';
+    el.style.animationDelay = '0s';
+    el.style.fontSize = (.9 + Math.random() * 1.2) + 'rem';
+    wrap.appendChild(el);
+    setTimeout(() => el.remove(), 14000);
+  }, 800);
+}
+
+/* ─── ANNIVERSARY COUNTER ─── */
+(function() {
+  const start = new Date('2023-02-25T00:00:00');
+  const now   = new Date();
+  const diff  = now - start;
+  const days  = Math.floor(diff / 864e5);
+  const hours = Math.floor((diff % 864e5) / 36e5);
+  const months= Math.floor(days / 30.44);
+  document.getElementById('cnt-days').textContent   = days;
+  document.getElementById('cnt-hours').textContent  = hours;
+  document.getElementById('cnt-months').textContent = months;
+})();
+
+/* ─── PET THE CAT ─── */
+(function() {
+  const cat      = document.getElementById('big-cat');
+  const bar      = document.getElementById('pet-bar');
+  const status   = document.getElementById('pet-status');
+  const countEl  = document.getElementById('pet-count');
+  const container= document.getElementById('pet-container');
+  let   pets     = 0, maxPets = 30;
+  const statuses = [
+    [0,  '😐 Ignoring you…'],
+    [3,  '😸 Oh… okay fine…'],
+    [7,  '😺 Purring a little…'],
+    [12, '😻 PURRING LOUDLY 😻'],
+    [18, '🐾 Best petter EVER!'],
+    [25, '💖 I LOVE YOU ROSHNI 💖'],
+    [30, '🎉 ULTIMATE PET MASTER!! 🎉']
+  ];
+
+  function pet() {
+    pets = Math.min(pets + 1, maxPets);
+    bar.style.width = (pets / maxPets * 100) + '%';
+    countEl.textContent = pets + ' pets given';
+    cat.className = 'big-cat ' + (pets > 20 ? 'very-happy' : 'happy');
+    setTimeout(() => cat.className = 'big-cat', 500);
+    for (let i = statuses.length - 1; i >= 0; i--) {
+      if (pets >= statuses[i][0]) { status.textContent = statuses[i][1]; break; }
+    }
+    if (pets >= maxPets) {
+      cat.textContent = '😻';
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          const h = document.createElement('div');
+          h.className = 'heart-burst';
+          h.textContent = ['💗','🌸','✨','💕','🎀'][Math.floor(Math.random()*5)];
+          h.style.left = (40 + Math.random() * 220) + 'px';
+          h.style.top  = '60px';
+          container.style.position = 'relative';
+          container.appendChild(h);
+          setTimeout(() => h.remove(), 700);
+        }, i * 100);
+      }
+    }
+  }
+
+  container.addEventListener('click', pet);
+  container.addEventListener('touchstart', pet, {passive:true});
+})();
+
+/* ─── OPEN LETTER ─── */
+document.getElementById('open-letter').addEventListener('click', function() {
+  const reveal = document.getElementById('letter-reveal');
+  reveal.classList.add('open');
+  this.style.display = 'none';
+  reveal.scrollIntoView({ behavior:'smooth', block:'center' });
+});
+
+/* ─── PROMISES ─── */
+(function() {
+  const promises = [
+    "I promise to always be your biggest cheerleader. 📣",
+    "I promise to never stop sending you good morning texts. ☀️",
+    "I promise to listen, even when I'm tired. 🌙",
+    "I promise to make you laugh every single day. 😂",
+    "I promise to always pick up your calls, no matter what. 📞",
+    "I promise to love your pink obsession forever. 💗",
+    "I promise to build you something beautiful every anniversary. 💻",
+    "I promise to always be on your team. 🤝",
+    "I promise that three years is just the beginning. 🌸",
+    "I promise to keep writing our story — one chapter at a time. 📖",
+    "I promise to annoy you in the most lovable ways. 😅",
+    "I promise that no matter how far, I'm always right here. 💕",
+    "I promise to make every 25th February feel like magic. ✨",
+    "I promise that you'll never feel alone while I'm here. 🫂",
+    "I promise to love you today, tomorrow, and every day after. 💓"
+  ];
+  let last = -1;
+  document.getElementById('promise-btn').addEventListener('click', function() {
+    let idx;
+    do { idx = Math.floor(Math.random() * promises.length); } while (idx === last);
+    last = idx;
+    const el = document.getElementById('promise-text');
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = promises[idx]; el.style.opacity = '1'; }, 300);
+  });
+})();
+
+/* ─── SCROLL REVEAL ─── */
+const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: .12 });
+document.querySelectorAll('.rosh-rv').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
